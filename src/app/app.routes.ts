@@ -1,16 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { CitasComponent } from './Component/Citas/Citas.component';
-import { NotificacionesComponent } from './Component/Notificaciones/Notificaciones.component';
-
-const routes: Routes = [
-  { path: '', redirectTo: '', pathMatch: 'full' },
+import { HomeComponent } from './Component/Home/Home.component';
+export const routes: Routes = [
   { path: 'citas', component: CitasComponent },
-  {path:'notificaciones', component:NotificacionesComponent}
+{path:'home',component:HomeComponent}
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
