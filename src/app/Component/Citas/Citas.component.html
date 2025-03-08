@@ -1,0 +1,13 @@
+<h2>Gestión de Citas</h2>
+<form (submit)="agregarCita()">
+  <input type="text" [(ngModel)]="nuevaCita.paciente" placeholder="Paciente" required>
+  <input type="text" [(ngModel)]="nuevaCita.medico" placeholder="Médico" required>
+  <input type="datetime-local" [(ngModel)]="nuevaCita.fecha" required>
+  <button type="submit">Agregar Cita</button>
+</form>
+
+<ul>
+  <li *ngFor="let cita of citas">
+    {{ cita.paciente }} - {{ cita.medico }} - {{ cita.fecha }} - {{ cita.estado }}
+  </li>
+</ul>
