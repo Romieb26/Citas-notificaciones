@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CitasService {
-  private apiUrl = 'http://localhost:3000/cita';
+  private apiUrl = 'http://localhost:8000/citas/';
 
   private http = inject(HttpClient);
 

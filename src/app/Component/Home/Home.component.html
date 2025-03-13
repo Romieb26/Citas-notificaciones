@@ -1,2 +1,45 @@
-<h2>Home</h2>
-<button (click)="mostrarNotificacion()">Mostrar Notificación</button>
+<!--Home.component.html-->
+<!-- Navbar -->
+<nav>
+  <ul>
+    <li><a routerLink="/">Inicio</a></li>
+    <li><a routerLink="/citas">Citas</a></li>
+    <li><a routerLink="/login">Inicio de Sesión</a></li>
+  </ul>
+</nav>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Bienvenido a MedApp</h1>
+      <p>Tu salud es nuestra prioridad. Agenda tu cita médica en línea de manera rápida y sencilla.</p>
+      <button (click)="mostrarNotificacion()">Agendar Cita</button>
+    </div>
+  </section>
+  
+  <!-- Servicios Section -->
+  <section class="servicios">
+    <h2>Nuestros Servicios</h2>
+    <div class="servicios-grid">
+      <div class="servicio">
+        <img src="/hopi.jpg" alt="Consulta General">
+        <h3>Consulta General</h3>
+        <p>Consulta con nuestros médicos generales para cualquier problema de salud.</p>
+      </div>
+      <div class="servicio">
+        <img src="/hopi1.jpg" alt="Especialistas">
+        <h3>Especialistas</h3>
+        <p>Accede a médicos especialistas en diversas áreas de la medicina.</p>
+      </div>
+      <div class="servicio">
+        <img src="/hopi2.jpg" alt="Exámenes">
+        <h3>Exámenes Médicos</h3>
+        <p>Realiza tus exámenes médicos con nosotros y obtén resultados rápidos.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 MedApp. Todos los derechos reservados.</p>
+  </footer>

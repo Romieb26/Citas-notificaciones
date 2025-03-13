@@ -1,0 +1,22 @@
+<!--Admin.component.html-->
+<!-- Navbar -->
+<nav>
+    <ul>
+      <li><a routerLink="/">Inicio</a></li>
+      <li><a routerLink="/citas">Citas</a></li>
+      <li><a routerLink="/login">Inicio de Sesión</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Citas Section -->
+  <section class="citas">
+    <h2>Administración de Citas</h2>
+    <div class="citas-grid">
+      <div class="cita-card" *ngFor="let cita of citas">
+        <h3>{{ cita.nombrePaciente }} {{ cita.apellidoPaciente }}</h3>
+        <p><strong>Área:</strong> {{ cita.areaCita }}</p>
+        <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+        <p><strong>Hora:</strong> {{ cita.hora }}</p>
+      </div>
+    </div>
+  </section>

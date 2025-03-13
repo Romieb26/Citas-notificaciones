@@ -1,0 +1,20 @@
+<!-- Navbar -->
+<nav>
+    <ul>
+      <li><a routerLink="/">Inicio</a></li>
+      <li><a routerLink="/citas">Citas</a></li>
+      <li><a routerLink="/login">Inicio de Sesión</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Login Section -->
+  <section class="login">
+    <h2>Iniciar Sesión</h2>
+    <form (submit)="iniciarSesion()">
+      <input type="text" [(ngModel)]="usuario" placeholder="Usuario" required>
+      <input type="password" [(ngModel)]="contrasena" placeholder="Contraseña" required>
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+    <p class="error">{{ mensajeError }}</p>
+    <p>¿No tienes cuenta? <a routerLink="/">Regresa al inicio</a></p>
+  </section>

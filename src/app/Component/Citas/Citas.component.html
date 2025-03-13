@@ -1,13 +1,36 @@
-<h2>Gestión de Citas</h2>
-<form (submit)="agregarCita()">
-  <input type="text" [(ngModel)]="nuevaCita.paciente" placeholder="Paciente" required>
-  <input type="text" [(ngModel)]="nuevaCita.medico" placeholder="Médico" required>
-  <input type="datetime-local" [(ngModel)]="nuevaCita.fecha" required>
-  <button type="submit">Agregar Cita</button>
-</form>
+<!--Citas.component.html-->
+<!-- Navbar -->
+<nav>
+  <ul>
+    <li><a routerLink="/">Inicio</a></li>
+    <li><a routerLink="/citas">Citas</a></li>
+    <li><a routerLink="/login">Inicio de Sesión</a></li>
+  </ul>
+</nav>
 
-<ul>
-  <li *ngFor="let cita of citas">
-    {{ cita.paciente }} - {{ cita.medico }} - {{ cita.fecha }} - {{ cita.estado }}
-  </li>
-</ul>
+<!-- Citas Section -->
+<section class="citas">
+  <h2>Gestión de Citas</h2>
+  <form (submit)="agregarCita()">
+    <input type="text" [(ngModel)]="nuevaCita.nombrePaciente" placeholder="Nombre del Paciente" required>
+    <input type="text" [(ngModel)]="nuevaCita.apellidoPaciente" placeholder="Apellido del Paciente" required>
+    <input type="text" [(ngModel)]="nuevaCita.numeroContacto" placeholder="Número de Contacto" required>
+    <select [(ngModel)]="nuevaCita.areaCita" required>
+      <option value="">Selecciona un área</option>
+      <option value="Medicina General">Medicina General</option>
+      <option value="Pediatría">Pediatría</option>
+      <option value="Oftalmología">Oftalmología</option>
+      <option value="Dermatología">Dermatología</option>
+      <option value="Cardiología">Cardiología</option>
+    </select>
+    <input type="date" [(ngModel)]="nuevaCita.fecha" required>
+    <input type="time" [(ngModel)]="nuevaCita.hora" required>
+    <button type="submit">Agregar Cita</button>
+  </form>
+
+  <ul>
+    <li *ngFor="let cita of citas">
+      {{ cita.nombrePaciente }} {{ cita.apellidoPaciente }} - {{ cita.areaCita }} - {{ cita.fecha }} {{ cita.hora }}
+    </li>
+  </ul>
+</section>
