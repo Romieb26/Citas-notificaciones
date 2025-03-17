@@ -11,11 +11,11 @@
 <!-- Citas Section -->
 <section class="citas">
   <h2>Gestión de Citas</h2>
-  <form (submit)="agregarCita()">
-    <input type="text" [(ngModel)]="nuevaCita.nombrePaciente" placeholder="Nombre del Paciente" required>
-    <input type="text" [(ngModel)]="nuevaCita.apellidoPaciente" placeholder="Apellido del Paciente" required>
-    <input type="text" [(ngModel)]="nuevaCita.numeroContacto" placeholder="Número de Contacto" required>
-    <select [(ngModel)]="nuevaCita.areaCita" required>
+  <form (ngSubmit)="agregarCita()">
+    <input type="text" [(ngModel)]="nuevaCita.nombrePaciente" name="nombrePaciente" placeholder="Nombre del Paciente" required>
+    <input type="text" [(ngModel)]="nuevaCita.apellidoPaciente" name="apellidoPaciente" placeholder="Apellido del Paciente" required>
+    <input type="text" [(ngModel)]="nuevaCita.numeroContacto" name="numeroContacto" placeholder="Número de Contacto" required>
+    <select [(ngModel)]="nuevaCita.areaCita" name="areaCita" required>
       <option value="">Selecciona un área</option>
       <option value="Medicina General">Medicina General</option>
       <option value="Pediatría">Pediatría</option>
@@ -23,14 +23,8 @@
       <option value="Dermatología">Dermatología</option>
       <option value="Cardiología">Cardiología</option>
     </select>
-    <input type="date" [(ngModel)]="nuevaCita.fecha" required>
-    <input type="time" [(ngModel)]="nuevaCita.hora" required>
+    <input type="date" [(ngModel)]="nuevaCita.fecha" name="fecha" required>
+    <input type="time" [(ngModel)]="nuevaCita.hora" name="hora" required>
     <button type="submit">Agregar Cita</button>
   </form>
-
-  <ul>
-    <li *ngFor="let cita of citas">
-      {{ cita.nombrePaciente }} {{ cita.apellidoPaciente }} - {{ cita.areaCita }} - {{ cita.fecha }} {{ cita.hora }}
-    </li>
-  </ul>
 </section>

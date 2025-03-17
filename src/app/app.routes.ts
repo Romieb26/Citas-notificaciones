@@ -9,5 +9,5 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '' } // Redirige a Home si la ruta no existe
+  { path: '**', redirectTo: '' }
 ];

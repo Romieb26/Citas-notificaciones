@@ -5,11 +5,12 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #FFD6FF; /* Fondo principal */
 }
 
 /* Navbar Styles */
 nav {
-  background-color: #007bff;
+  background-color: #B8C0FF; /* Color de fondo del navbar */
   padding: 1rem;
 }
 
@@ -33,6 +34,7 @@ nav ul li a {
 
 nav ul li a:hover {
   text-decoration: underline;
+  color: #E7C6FF; /* Color al hacer hover */
 }
 
 /* Hero Section Styles */
@@ -49,6 +51,17 @@ nav ul li a:hover {
   position: relative;
 }
 
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Overlay oscuro para mejorar la legibilidad */
+  z-index: 1;
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
@@ -57,15 +70,17 @@ nav ul li a:hover {
 .hero-content h1 {
   font-size: 3em;
   margin-bottom: 1rem;
+  color: #FFD6FF; /* Color del título */
 }
 
 .hero-content p {
   font-size: 1.5em;
   margin-bottom: 2rem;
+  color: #E7C6FF; /* Color del texto */
 }
 
 .hero-content button {
-  background-color: #ff4081;
+  background-color: #C8B6FF; /* Color del botón */
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -75,18 +90,20 @@ nav ul li a:hover {
 }
 
 .hero-content button:hover {
-  background-color: #e91e63;
+  background-color: #B8C0FF; /* Color al hacer hover */
 }
 
 /* Servicios Section Styles */
 .servicios {
   padding: 2rem;
   text-align: center;
+  background-color: #BBD0FF; /* Fondo de la sección de servicios */
 }
 
 .servicios h2 {
   font-size: 2.5em;
   margin-bottom: 2rem;
+  color: #FFD6FF; /* Color del título */
 }
 
 .servicios-grid {
@@ -98,6 +115,10 @@ nav ul li a:hover {
 .servicio {
   width: 30%;
   margin-bottom: 2rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .servicio img {
@@ -110,6 +131,7 @@ nav ul li a:hover {
 .servicio h3 {
   font-size: 1.5em;
   margin: 1rem 0;
+  color: #C8B6FF; /* Color del título del servicio */
 }
 
 .servicio p {
@@ -119,7 +141,7 @@ nav ul li a:hover {
 
 /* Footer Styles */
 footer {
-  background-color: #333;
+  background-color: #B8C0FF; /* Color de fondo del footer */
   color: white;
   text-align: center;
   padding: 1rem;
@@ -128,4 +150,5 @@ footer {
 
 footer p {
   margin: 0;
+  color: #FFD6FF; /* Color del texto del footer */
 }
