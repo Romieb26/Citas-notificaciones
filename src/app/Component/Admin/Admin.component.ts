@@ -1,6 +1,6 @@
 //Admin.component.ts
 import { Component, OnInit, inject } from '@angular/core';
-import { CitasService } from '../../Services/Citas.Services';
+import { NotificacionService } from '../../Services/Notificacion.Services'; // Asegúrate de que la ruta sea correcta
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -9,18 +9,20 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './Admin.component.html',
-  styleUrls: ['./Admin.component.css']
+  styleUrls: ['./Admin.component.css'],
 })
 export class AdminComponent implements OnInit {
   citas: any[] = [];
 
-  private citasService = inject(CitasService);
+  private notificacionService = inject(NotificacionService);
 
   ngOnInit() {
     this.obtenerCitas();
   }
 
   obtenerCitas() {
-    this.citasService.getCitas().subscribe(data => this.citas = data);
+    this.notificacionService.getNotificaciones().subscribe((data) => {
+      this.citas = data;
+    });
   }
 }

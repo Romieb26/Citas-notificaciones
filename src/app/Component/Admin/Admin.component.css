@@ -1,70 +1,73 @@
 /*Admin.component.css*/
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #e9a5ff;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  h2 {
-    color: #000000;
-    font-size: 2.5em;
-    margin-bottom: 1rem;
-  }
-  
-  .citas-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .cita-card {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: left;
-  }
-  
-  .cita-card h3 {
-    margin: 0 0 10px;
-    font-size: 1.5em;
-  }
-  
-  .cita-card p {
-    margin: 5px 0;
-    font-size: 1.1em;
-    color: #555;
-  }
-  
-  /* Navbar Styles */
-  nav {
-    background-color: #007bff;
-    padding: 1rem;
-  }
-  
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  nav ul li {
-    margin: 0 1rem;
-  }
-  
-  nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2em;
-  }
-  
-  nav ul li a:hover {
-    text-decoration: underline;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #ffd6ff; /* Fondo principal */
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+h2 {
+  color: #000000;
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.citas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.cita-card {
+  background: #e7c6ff; /* Fondo de las tarjetas */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: left;
+}
+
+.cita-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.5em;
+  color: #000000;
+}
+
+.cita-card p {
+  margin: 5px 0;
+  font-size: 1.1em;
+  color: #555;
+}
+
+/* Navbar Styles */
+nav {
+  background-color: #b8c0ff; /* Fondo del navbar */
+  padding: 1rem;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 1rem;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
