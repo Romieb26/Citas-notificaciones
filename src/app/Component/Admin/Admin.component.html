@@ -11,12 +11,35 @@
 <!-- Citas Section -->
 <section class="citas">
   <h2>Administración de Citas</h2>
+
+  <!-- Botones de filtrado -->
+  <div class="filtros">
+    <button (click)="filtrarCitas('todos')">Todas</button>
+    <button (click)="filtrarCitas('pendiente')">Pendientes</button>
+    <button (click)="filtrarCitas('aceptado')">Aceptadas</button>
+    <button (click)="filtrarCitas('rechazada')">Rechazadas</button>
+    <button (click)="filtrarCitas('en espera')">En espera</button>
+  </div>
+
+  <!-- Lista de citas -->
   <div class="citas-grid">
-    <div class="cita-card" *ngFor="let cita of citas">
+    <div class="cita-card" *ngFor="let cita of citasFiltradas">
+      <h3>ID: {{ cita.citaId }}</h3> <!-- Mostrar el ID de la cita -->
       <h3>{{ cita.nombrePaciente }} {{ cita.apellidoPaciente }}</h3>
       <p><strong>Área:</strong> {{ cita.areaCita }}</p>
-      <p><strong>Fecha:</strong> {{ cita.fecha }}</p>
+      <p><strong>Fecha:</strong> {{ cita.fecha | date: 'dd/MM/yyyy' }}</p>
       <p><strong>Hora:</strong> {{ cita.hora }}</p>
+      <p><strong>Estado:</strong> {{ cita.estado }}</p>
+
+      <!-- Selector para cambiar el estado -->
+      <select
+        [(ngModel)]="cita.estado"
+        (change)="confirmarCambioEstado(cita, cita.estado)"
+      >
+        <option *ngFor="let estado of estados" [value]="estado">
+          {{ estado }}
+        </option>
+      </select>
     </div>
   </div>
 </section>
