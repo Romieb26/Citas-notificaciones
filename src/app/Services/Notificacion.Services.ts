@@ -19,7 +19,7 @@ export interface Cita {
   providedIn: 'root',
 })
 export class NotificacionService {
-  private apiUrl = 'http://localhost:8001/notificacion/';
+  private apiUrl = 'http://34.237.191.108:8001/notificacion/';
   private http = inject(HttpClient);
 
   // Obtener todas las notificaciones (citas)
