@@ -1,4 +1,3 @@
-<!--Admin.component.html-->
 <!-- Navbar -->
 <nav>
   <ul>
@@ -7,6 +6,25 @@
     <li><a routerLink="/login">Inicio de Sesión</a></li>
   </ul>
 </nav>
+
+<!-- Notificaciones -->
+<div class="notificaciones-container" *ngIf="notificaciones.length > 0">
+  <div class="notificacion" *ngFor="let notif of notificaciones">
+    <div class="notificacion-header">
+      <h3>Nueva cita: {{notif.nombrePaciente}} {{notif.apellidoPaciente}}</h3>
+      <button (click)="marcarComoVista(notif.citaId ?? -1)">×</button>
+    </div>
+    <div class="notificacion-body">
+      <p><strong>Teléfono:</strong> {{notif.numeroContacto}}</p>
+      <p><strong>Área:</strong> {{notif.areaCita}}</p>
+      <p><strong>Fecha:</strong> {{notif.fecha | date: 'dd/MM/yyyy'}}</p>
+      <p><strong>Hora:</strong> {{notif.hora}}</p>
+    </div>
+    <div class="notificacion-footer">
+      <small>{{notif.fechaNotificacion | date: 'HH:mm:ss'}}</small>
+    </div>
+  </div>
+</div>
 
 <!-- Citas Section -->
 <section class="citas">
@@ -24,22 +42,26 @@
   <!-- Lista de citas -->
   <div class="citas-grid">
     <div class="cita-card" *ngFor="let cita of citasFiltradas">
-      <h3>ID: {{ cita.citaId }}</h3> <!-- Mostrar el ID de la cita -->
+      <h3>ID: {{ cita.citaId }}</h3>
       <h3>{{ cita.nombrePaciente }} {{ cita.apellidoPaciente }}</h3>
+      <p><strong>Teléfono:</strong> {{ cita.numeroContacto }}</p>
       <p><strong>Área:</strong> {{ cita.areaCita }}</p>
       <p><strong>Fecha:</strong> {{ cita.fecha | date: 'dd/MM/yyyy' }}</p>
       <p><strong>Hora:</strong> {{ cita.hora }}</p>
-      <p><strong>Estado:</strong> {{ cita.estado }}</p>
+      <p><strong>Estado:</strong> {{ cita.estado || 'Sin estado' }}</p>
 
       <!-- Selector para cambiar el estado -->
-      <select
-        [(ngModel)]="cita.estado"
-        (change)="confirmarCambioEstado(cita, cita.estado)"
-      >
-        <option *ngFor="let estado of estados" [value]="estado">
-          {{ estado }}
-        </option>
-      </select>
+      <div class="estado-selector">
+        <select
+          [(ngModel)]="cita.estado"
+          (change)="confirmarCambioEstado(cita, cita.estado)"
+        >
+          <option value="" disabled selected>Seleccione estado</option>
+          <option *ngFor="let estado of estados" [value]="estado">
+            {{ estado }}
+          </option>
+        </select>
+      </div>
     </div>
   </div>
 </section>

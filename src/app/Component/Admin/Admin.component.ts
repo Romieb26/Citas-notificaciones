@@ -1,44 +1,87 @@
-//Admin.component.ts
-import { Component, OnInit, inject } from '@angular/core';
-import { NotificacionService, Cita } from '../../Services/Notificacion.Services'; // Importa Cita
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { NotificacionService, Cita, NotificacionCita } from '../../Services/Notificacion.Services';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // Importar FormsModule
+import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule], // Agregar FormsModule aquí
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './Admin.component.html',
   styleUrls: ['./Admin.component.css'],
 })
-export class AdminComponent implements OnInit {
-  citas: Cita[] = []; // Todas las citas
-  citasFiltradas: Cita[] = []; // Citas filtradas
-  estados: string[] = ['pendiente', 'aceptado', 'rechazada', 'en espera']; // Lista de estados
-  estadoFiltro: string = 'pendiente'; // Estado seleccionado para filtrar (inicialmente "pendiente")
-
+export class AdminComponent implements OnInit, OnDestroy {
+  citas: Cita[] = [];
+  citasFiltradas: Cita[] = [];
+  notificaciones: NotificacionCita[] = [];
+  estados: string[] = ['pendiente', 'aceptado', 'rechazada', 'en espera'];
+  estadoFiltro: string = 'pendiente';
+  
+  private subscriptions: Subscription[] = [];
   private notificacionService = inject(NotificacionService);
 
   ngOnInit() {
-    this.obtenerCitas();
+    // Cargar citas iniciales
+    this.subscriptions.push(
+      this.notificacionService.getNotificaciones().subscribe({
+        next: (data) => {
+          this.citas = data;
+          this.filtrarCitas(this.estadoFiltro);
+        },
+        error: (err) => {
+          console.error('Error al obtener citas iniciales:', err);
+        }
+      })
+    );
+
+    // Suscribirse a actualizaciones en tiempo real
+    this.subscriptions.push(
+      this.notificacionService.citasEnTiempoReal.subscribe({
+        next: (data: Cita | Cita[]) => {
+          console.log('Datos recibidos en componente:', data);
+          
+          if (Array.isArray(data)) {
+            this.citas = data;
+          } else {
+            this.actualizarListaCitas(data);
+          }
+          this.filtrarCitas(this.estadoFiltro);
+        },
+        error: (err) => {
+          console.error('Error en la suscripción WebSocket:', err);
+        }
+      })
+    );
+
+    // Suscribirse a notificaciones
+    this.subscriptions.push(
+      this.notificacionService.notificaciones$.subscribe(notifs => {
+        this.notificaciones = notifs.filter(n => !n.vista);
+      })
+    );
   }
 
-  // Obtener todas las citas y filtrar por "pendiente" al inicio
-  obtenerCitas() {
-    this.notificacionService.getNotificaciones().subscribe({
-      next: (data) => {
-        this.citas = data;
-        this.citasFiltradas = data.filter((cita) => cita.estado === 'pendiente'); // Filtrar por "pendiente" al inicio
-        console.log('Citas obtenidas:', this.citas); // Depuración: Verifica que las citas tengan cita_id
-      },
-      error: (err) => {
-        console.error('Error al obtener las citas:', err);
-      },
-    });
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  // Confirmar antes de cambiar el estado
+  private actualizarListaCitas(cita: Cita) {
+    if (cita.citaId === undefined || cita.citaId === null) {
+      console.error('Cita recibida sin ID válido:', cita);
+      return;
+    }
+
+    const index = this.citas.findIndex(c => c.citaId === cita.citaId);
+    
+    if (index !== -1) {
+      this.citas[index] = cita;
+    } else {
+      this.citas.unshift(cita);
+    }
+  }
+
   confirmarCambioEstado(cita: Cita, nuevoEstado: string) {
     const confirmacion = window.confirm(
       `¿Estás seguro de cambiar el estado de la cita a "${nuevoEstado}"?`
@@ -47,37 +90,43 @@ export class AdminComponent implements OnInit {
     if (confirmacion) {
       this.actualizarEstado(cita, nuevoEstado);
     } else {
-      // Si el usuario cancela, restablecer el estado anterior
-      cita.estado = cita.estado; // No es necesario hacer nada, pero puedes agregar lógica adicional si lo deseas
+      const originalCita = this.citas.find(c => c.citaId === cita.citaId);
+      if (originalCita) {
+        cita.estado = originalCita.estado;
+      }
     }
   }
 
-  // Actualizar el estado de una cita
   actualizarEstado(cita: Cita, nuevoEstado: string) {
-    if (!cita.citaId) { // Cambia 'id' por 'cita_id'
+    if (!cita.citaId) {
       console.error('Error: La cita no tiene un ID válido');
       return;
     }
 
     this.notificacionService.actualizarEstadoCita(cita.citaId, nuevoEstado).subscribe({
-      next: (citaActualizada) => {
-        // Actualizar el estado en la lista local
-        cita.estado = nuevoEstado;
-        this.filtrarCitas(this.estadoFiltro); // Re-filtrar después de actualizar
+      next: () => {
+        console.log('Estado actualizado, esperando confirmación por WS');
       },
       error: (err) => {
         console.error('Error al actualizar el estado:', err);
+        const originalCita = this.citas.find(c => c.citaId === cita.citaId);
+        if (originalCita) {
+          cita.estado = originalCita.estado;
+        }
       },
     });
   }
 
-  // Filtrar citas por estado
   filtrarCitas(estado: string) {
     this.estadoFiltro = estado;
     if (estado === 'todos') {
-      this.citasFiltradas = this.citas; // Mostrar todas las citas
+      this.citasFiltradas = [...this.citas];
     } else {
-      this.citasFiltradas = this.citas.filter((cita) => cita.estado === estado); // Filtrar por estado
+      this.citasFiltradas = this.citas.filter((cita) => cita.estado === estado);
     }
+  }
+
+  marcarComoVista(citaId: number) {
+    this.notificacionService.marcarComoVista(citaId);
   }
 }
