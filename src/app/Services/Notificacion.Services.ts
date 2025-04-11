@@ -22,8 +22,8 @@ export interface NotificacionCita extends Cita {
   providedIn: 'root',
 })
 export class NotificacionService {
-  private apiUrl = 'http://localhost:8001/notificacion/';
-  private wsUrl = 'ws://localhost:8001/ws';
+  private apiUrl = 'http://34.237.191.108:8001/notificacion/';
+  private wsUrl = 'ws://34.237.191.108:8001/ws';
   private socket!: WebSocket;
   private citaSubject = new Subject<Cita | Cita[]>();
   private notificacionesSubject = new Subject<NotificacionCita[]>();
